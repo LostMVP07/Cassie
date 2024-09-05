@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain of Text</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        #rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .rain-text {
+            position: absolute;
+            font-size: 24px;
+            color: #333;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                top: -50px;
+            }
+            to {
+                top: 100vh;
+            }
+        }
+
+        .button-container {
+            z-index: 10;
+        }
+
+        .button-container button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: transparent; /* Transparent background */
+            border: 2px solid #333; /* Border added */
+            color: #333; /* Text color */
+            border-radius: 5px; /* Optional: Add rounded corners */
+            transition: color 0.3s, border-color 0.3s; /* Smooth hover transition */
+        }
+
+        .button-container button:hover {
+            color: #000; /* Darker text on hover */
+            border-color: #000; /* Darker border on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button onclick="startRain()">Click me Cassieee!!!!! wieeeeee</button>
+    </div>
+    <div id="rain-container"></div>
+
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function createFallingText(text) {
+            const rainContainer = document.getElementById('rain-container');
+            const randomColor = getRandomColor(); // Generate random color for each text
+
+            // Create a text element
+            const rainText = document.createElement('div');
+            rainText.classList.add('rain-text');
+            rainText.innerHTML = text; // Use innerHTML to support HTML entities
+
+            // Set the random color
+            rainText.style.color = randomColor;
+
+            // Randomize starting position
+            rainText.style.left = Math.random() * window.innerWidth + 'px';
+
+            // Randomize falling duration
+            const duration = Math.random() * 3 + 2; // Between 2 to 5 seconds
+            rainText.style.animationDuration = duration + 's';
+
+            rainContainer.appendChild(rainText);
+
+            // Remove the text after it falls out of view
+            setTimeout(() => {
+                rainContainer.removeChild(rainText);
+            }, duration * 1000);
+        }
+
+        function startRain() {
+            createFallingText("Cassie"); // Create "Cassie" text
+            createFallingText("&#x2665;"); // Create heart symbol (♥) text
+        }
+    </script>
+</body>
+</html>
